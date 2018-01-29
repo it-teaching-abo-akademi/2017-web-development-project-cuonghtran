@@ -1,0 +1,142 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Stock Portfolio Management System</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<script src="jquery-3.2.1.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
+	<link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
+	<script src="scripts.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row button-row">
+			<button id="addButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPortModal">Add new portfolio</button>
+			<button id="refreshButton" type="button" class="btn btn-primary" style="margin-left: 24px">Refresh data</button>
+		</div>
+	</div>
+	<div id="containerDiv" class="container">
+	</div>
+
+	<!-- BEGIN Add Portfolio Modal -->
+	<div class="modal fade" id="addPortModal" tabindex="-1" role="dialog" aria-labelledby="addPortModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+			<h5 class="modal-title" id="addPortModalLabel">Add new Portfolio</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			</div>
+			<div class="modal-body">
+				<div class="input-group mb-3">
+					<div id="nameError" class="alert alert-danger" style="width:100%" role="alert" hidden>						
+					</div>
+					<div class="input-group-prepend">
+						<span class="input-group-text">Name</span>
+					</div>
+					<input type="text" id="portNameText" class="form-control">
+				</div>
+			</div>
+			<div class="modal-footer">
+			<button id="closeAddModalButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<button id="savePortButton" type="button" class="btn btn-primary">Save</button>
+			</div>
+		</div>
+		</div>
+	</div>
+	<!-- END Add Portfolio Modal -->
+
+	<!-- BEGIN Add stock modal -->
+	<div class="modal fade" id="addStockModal" tabindex="-1" role="dialog" aria-labelledby="addStockTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="addStockTitle">Add stock</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="stockError" class="alert alert-danger" style="width:100%" role="alert" hidden>
+					</div>
+					<div class="input-group mb-3">
+						<label id="stockPortId" hidden></label>
+						<div class="input-group-prepend">
+							<span class="input-group-text">Symbol</span>
+						</div>
+						<input type="text" id="symbolText" class="form-control">
+
+						<div class="input-group-prepend" style="margin-left:12px">
+							<span class="input-group-text">Quantity</span>
+						</div>
+						<input type="number" id="quantityText" class="form-control">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" id="saveStockButton" class="btn btn-primary">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END Add stock modal -->
+
+	<!-- BEGIN Error Modal -->
+	<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+			<h5 class="modal-title" id="errorModalLabel">Error</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			</div>
+			<div class="modal-body">
+				<div id="errorDiv" class="alert alert-danger" style="width:100%" role="alert">
+				</div>
+			</div>
+			<div class="modal-footer">
+			<button id="closeAddModalButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+		</div>
+	</div>
+	<!-- END Error Modal -->
+
+	<!-- BEGIN Performance graph modal -->
+	<div class="modal fade" id="performanceModal" style="width:100%" tabindex="-1" role="dialog" aria-labelledby="performanceTitle" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="performanceTitle"></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="portInfo" class="alert alert-info" style="width:100%" role="alert" hidden>
+						This portfolio has no stock to show!
+					</div>
+					<label id="portId" hidden></label>
+					<div id="performanceChart" />
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END Performance graph modal -->
+	
+	<!-- Optional Javascript -->
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

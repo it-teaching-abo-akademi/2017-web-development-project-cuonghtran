@@ -1,0 +1,86 @@
+body {
+	background-color: #e6ecf0;
+	line-height: 20px;
+	font-size: 14px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 576px) {
+	.container {
+		width: 100%;
+	}
+}
+
+@media (min-width: 768px) {
+	.container {
+		width: 55%;
+	}
+}
+
+.row {
+	background-color: #fff;
+	margin-bottom: 10px;
+	border: 1px solid #e6ecf0;
+	border-radius: 10px;
+}
+
+.btn {
+	border-radius: 10px;
+}
+
+.button-row {
+	background-color: #e6ecf0;
+	padding-top: 12px;
+}
+
+.content-wrapper {
+	width: 100%;
+	padding: 12px;
+}
+
+.content-header {
+
+}
+
+.content-main {
+	padding-top: 12px;
+}
+
+.content-info {
+	padding-top: 12px;
+}
+
+.content-footer {
+	padding-top: 12px;
+}
+
+.radio-label {
+	margin-right: 8px;
+}
+
+.select-currency {
+	float: right; 
+	margin-bottom: 12px;
+	width:25%;
+	min-width: 150px;
+}
+
+.delete-div {
+	opacity: 1;
+	z-index: 3;
+	position: relative;
+	float: right;
+}
+
+.delete-button {
+	height: 24px; 
+	width: 20px;  
+	background-image:url('https://png.icons8.com/metro/1600/delete-sign.png');
+	background-size: 24px 24px;
+	background-repeat:no-repeat;
+}
+
+.block {
+	display: inline-block;
+}
